@@ -1,4 +1,5 @@
 "use strict";
+require('dotenv').config()
 const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
@@ -13,14 +14,14 @@ async function sendMail(email) {
     secure: true,
     port: 465,
     auth: {
-        user: 'hemaofakkez229@gmail.com',
-        pass: 'ppzimugavkwofmow'
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PWD
     }
 });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'hemaofakkez229@gmail.com', // sender address
+    from: process.env.NODEMAILER_EMAIL, // sender address
     to: email, // list of receivers
     subject: "Registro de bienestar ✔", // Subject line
     text: "Registro a la base de datos de bienestar", // plain text body
@@ -37,7 +38,7 @@ async function sendMail(email) {
 
 
 
-// sendMail(email).then(rta=>{
+// sendMail('testbienbd1@gmail.com').then(rta=>{
 //     console.log('enviando');
 // }).catch(console.error);
  module.exports = sendMail
